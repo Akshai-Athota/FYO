@@ -16,4 +16,7 @@ public class PhoneNumberDto {
     @NotBlank(message="phone number is required")
     @Size(min=10,max=10)
     private String mobileNumber;
+
+    @NotBlank(message="country code is mandatory")
+    private String countryCode;
 }

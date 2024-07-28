@@ -2,6 +2,7 @@ package com.akshai.FYO.Mapper;
 
 import com.akshai.FYO.DTO.PersonDto;
 import com.akshai.FYO.Model.Person;
+import com.akshai.FYO.Model.PhoneNumber;
 
 import java.util.stream.Collectors;
 
@@ -20,7 +21,12 @@ public class PersonMapper {
         Person person = new Person();
         person.setName(personDto.getName());
         person.setAddress(AddressMapper.addressDtoToAddress(personDto.getAddress()));
-        person.setPhoneNumbers(personDto.getPhoneNumbers().stream().map(PhoneNumberMapper::phoneNumberDtoToPhoneNumber)
+        person.setPhoneNumbers(personDto.getPhoneNumbers().stream()
+                .map(phoneNumberDto -> {
+                    PhoneNumber phoneNumber = PhoneNumberMapper.phoneNumberDtoToPhoneNumber(phoneNumberDto);
+                    phoneNumber.setPerson(person);
+                    return phoneNumber;
+                })
                 .collect(Collectors.toList()));
         return person;
     }
